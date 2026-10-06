@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    .device-node {
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .device-node:hover {
+      transform: translateY(-2px);
+      filter: drop-shadow(0 4px 6px rgba(56, 189, 248, 0.4));
+    }
+    .device-node.selected {
+      outline: 2px solid #38bdf8;
+      outline-offset: 2px;
+    }
+    @keyframes pulsePacket {
+      0% { offset-distance: 0%; opacity: 0; }
+      15% { opacity: 1; }
+      85% { opacity: 1; }
+      100% { offset-distance: 100%; opacity: 0; }
+    }
+    .packet-dot {
+      fill: #10b981;
+      filter: drop-shadow(0 0 6px #10b981);
+    }
+  </style>
+</head>
+<body class="bg-transparent text-[var(--foreground)] antialiased p-2">
+  <div class="bg-[var(--card)] text-[var(--foreground)] border border-[var(--border)] rounded-xl p-3 shadow-lg max-w-4xl mx-auto">
+    <!-- Top Bar -->
+    <div class="flex flex-wrap items-center justify-between pb-2 mb-2 border-b border-[var(--border)] gap-2">
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">SIMULATION MODE</span>
+        <h2 class="text-sm font-bold text-[var(--foreground)]">Cisco Packet Tracer Interactive Simulation</h2>
+      </div>
+      <div class="flex items-center gap-2">
+        <button id="btn-simulate" onclick="runPacketSimulation()" class="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold rounded-lg shadow transition flex items-center gap-1.5">
+          <span>▶ Run Packet Simulation</span>
+        </button>
+        <button onclick="resetSimulation()" class="px-2.5 py-1 bg-[var(--secondary)] hover:bg-[var(--border)] text-xs text-[var(--foreground)] rounded-lg transition">
+          ↺ Reset
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Interactive Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-3">
+      <!-- Left: Interactive Canvas (2 Cols) -->
+      <div class="lg:col-span-2 bg-[#0a0f1d] border border-slate-800 rounded-lg p-2 relative overflow-hidden">
+        <div class="text-[10px] text-slate-400 absolute top-2 left-2 z-10 flex items-center gap-2">
+          <span>Topology Canvas</span>
+          <span class="text-emerald-400 text-[9px] flex items-center gap-1">● All Links Active</span>
+        </div>
+
+        <svg id="sim-svg" viewBox="0 0 580 380" class="w-full h-auto">
+          <!-- Connection Lines -->
+          <!-- Cloud to Router -->
+          <line x1="290" y1="35" x2="290" y2="70" stroke="#38bdf8" stroke-width="2" stroke-dasharray="3"/>
+          <!-- Router to Firewall -->
+          <line x1="290" y1="95" x2="290" y2="125" stroke="#ef4444" stroke-width="2"/>
+          <!-- Firewall to Core -->
+          <line x1="290" y1="150" x2="290" y2="180" stroke="#a855f7" stroke-width="2"/>
+          
+          <!-- Core to Servers -->
+          <line x1="290" y1="200" x2="480" y2="180" stroke="#f59e0b" stroke-width="1.8"/>
+          <line x1="290" y1="200" x2="480" y2="215" stroke="#f59e0b" stroke-width="1.8"/>
+
+          <!-- Core to Access Switches (Trunks) -->
+          <path id="path-core-asw1" d="M 290 205 L 100 260" stroke="#10b981" stroke-width="2"/>
+          <path id="path-core-asw2" d="M 290 205 L 290 260" stroke="#10b981" stroke-width="2"/>
+          <path id="path-core-asw3" d="M 290 205 L 480 260" stroke="#10b981" stroke-width="2"/>
+
+          <!-- ASW1 to Workstations -->
+          <path id="path-asw1-pc1" d="M 100 280 L 60 330" stroke="#64748b" stroke-width="1.5"/>
+          <path id="path-asw1-pc2" d="M 100 280 L 140 330" stroke="#64748b" stroke-width="1.5"/>
+
+          <!-- ASW2 to Workstations -->
+          <path id="path-asw2-pc1" d="M 290 280 L 250 330" stroke="#64748b" stroke-width="1.5"/>
+          <path id="path-asw2-pc2" d="M 290 280 L 330 330" stroke="#64748b" stroke-width="1.5"/>
+
+          <!-- ASW3 to Workstations -->
+          <path id="path-asw3-pc1" d="M 480 280 L 440 330" stroke="#64748b" stroke-width="1.5"/>
+          <path id="path-asw3-pc2" d="M 480 280 L 520 330" stroke="#64748b" stroke-width="1.5"/>
+
+          <!-- Animated Packet Circle -->
+          <circle id="anim-packet" r="5" fill="#10b981" class="hidden" filter="drop-shadow(0 0 5px #10b981)"/>
+
+          <!-- TOP LEVEL: Cloud -->
+          <g class="device-node" onclick="selectDev('cloud')">
+            <ellipse cx="290" cy="22" rx="42" ry="16" fill="#0284c7" opacity="0.8"/>
+            <text x="290" y="25" fill="#fff" font-size="9" font-weight="bold" text-anchor="middle">ISP_Cloud</text>
+          </g>
+
+          <!-- Router -->
+          <g class="device-node" onclick="selectDev('router')">
+            <rect x="235" y="70" width="110" height="26" rx="5" fill="#1d4ed8" stroke="#3b82f6" stroke-width="1"/>
+            <text x="290" y="86" fill="#fff" font-size="10" font-weight="bold" text-anchor="middle">R1-Edge-2911</text>
+          </g>
+
+          <!-- Firewall -->
+          <g class="device-node" onclick="selectDev('firewall')">
+            <rect x="230" y="125" width="120" height="26" rx="5" fill="#b91c1c" stroke="#ef4444" stroke-width="1"/>
+            <text x="290" y="141" fill="#fff" font-size="10" font-weight="bold" text-anchor="middle">FW-Perimeter-5506</text>
+          </g>
+
+          <!-- Core Switch -->
+          <g class="device-node" onclick="selectDev('core')">
+            <rect x="220" y="180" width="140" height="30" rx="6" fill="#6d28d9" stroke="#a855f7" stroke-width="1.5"/>
+            <text x="290" y="196" fill="#fff" font-size="10" font-weight="bold" text-anchor="middle">SW-Core-3560 (L3)</text>
+            <text x="290" y="206" fill="#d8b4fe" font-size="7" text-anchor="middle">Routing Engine / SVIs</text>
+          </g>
+
+          <!-- Servers -->
+          <g class="device-node" onclick="selectDev('srv1')">
+            <rect x="430" y="168" width="115" height="22" rx="4" fill="#b45309" stroke="#f59e0b" stroke-width="1"/>
+            <text x="487" y="182" fill="#fff" font-size="9" font-weight="bold" text-anchor="middle">SRV-DHCP-DNS</text>
+          </g>
+          <g class="device-node" onclick="selectDev('srv2')">
+            <rect x="430" y="204" width="115" height="22" rx="4" fill="#b45309" stroke="#f59e0b" stroke-width="1"/>
+            <text x="487" y="218" fill="#fff" font-size="9" font-weight="bold" text-anchor="middle">SRV-WEB-FILE</text>
+          </g>
+
+          <!-- Access Switches -->
+          <g class="device-node" onclick="selectDev('asw1')">
+            <rect x="45" y="260" width="110" height="25" rx="5" fill="#047857" stroke="#10b981" stroke-width="1"/>
+            <text x="100" y="275" fill="#fff" font-size="9" font-weight="bold" text-anchor="middle">SW-ASW1 (1st Fl)</text>
+          </g>
+          <g class="device-node" onclick="selectDev('asw2')">
+            <rect x="235" y="260" width="110" height="25" rx="5" fill="#047857" stroke="#10b981" stroke-width="1"/>
+            <text x="290" y="275" fill="#fff" font-size="9" font-weight="bold" text-anchor="middle">SW-ASW2 (Ground)</text>
+          </g>
+          <g class="device-node" onclick="selectDev('asw3')">
+            <rect x="425" y="260" width="110" height="25" rx="5" fill="#047857" stroke="#10b981" stroke-width="1"/>
+            <text x="480" y="275" fill="#fff" font-size="9" font-weight="bold" text-anchor="middle">SW-ASW3 (2nd Fl)</text>
+          </g>
+
+          <!-- Client Workstations -->
+          <g class="device-node" onclick="selectDev('pc-hr')">
+            <rect x="35" y="325" width="50" height="22" rx="3" fill="#1e293b" stroke="#38bdf8"/>
+            <text x="60" y="339" fill="#93c5fd" font-size="8" font-weight="bold" text-anchor="middle">PC-HR-01</text>
+          </g>
+          <g class="device-node" onclick="selectDev('pc-fin')">
+            <rect x="115" y="325" width="50" height="22" rx="3" fill="#1e293b" stroke="#34d399"/>
+            <text x="140" y="339" fill="#a7f3d0" font-size="8" font-weight="bold" text-anchor="middle">PC-FIN-01</text>
+          </g>
+          <g class="device-node" onclick="selectDev('pc-sup')">
+            <rect x="225" y="325" width="50" height="22" rx="3" fill="#1e293b" stroke="#38bdf8"/>
+            <text x="250" y="339" fill="#93c5fd" font-size="8" font-weight="bold" text-anchor="middle">PC-SUP-01</text>
+          </g>
+          <g class="device-node" onclick="selectDev('pc-sales')">
+            <rect x="305" y="325" width="50" height="22" rx="3" fill="#1e293b" stroke="#f43f5e"/>
+            <text x="330" y="339" fill="#fca5a5" font-size="8" font-weight="bold" text-anchor="middle">PC-SALES-1</text>
+          </g>
+          <g class="device-node" onclick="selectDev('pc-it')">
+            <rect x="415" y="325" width="50" height="22" rx="3" fill="#1e293b" stroke="#eab308"/>
+            <text x="440" y="339" fill="#fde047" font-size="8" font-weight="bold" text-anchor="middle">PC-IT-01</text>
+          </g>
+          <g class="device-node" onclick="selectDev('pc-mgmt')">
+            <rect x="495" y="325" width="50" height="22" rx="3" fill="#1e293b" stroke="#f97316"/>
+            <text x="520" y="339" fill="#fdba74" font-size="8" font-weight="bold" text-anchor="middle">PC-MGMT-1</text>
+          </g>
+        </svg>
+
+        <!-- Live Simulation Status Banner -->
+        <div id="sim-status" class="mt-1 text-[11px] p-1.5 rounded bg-slate-900 border border-slate-800 text-slate-300 flex items-center justify-between">
+          <span id="status-text">Click any device to inspect ports &amp; CLI, or click "Run Packet Simulation".</span>
+          <span id="ping-indicator" class="text-xs font-mono font-bold text-emerald-400">STATUS: IDLE</span>
+        </div>
+      </div>
+
+      <!-- Right: Inspector Panel (1 Col) -->
+      <div class="bg-[var(--secondary)]/40 border border-[var(--border)] rounded-lg p-3 flex flex-col justify-between text-xs">
+        <div>
+          <div class="flex items-center justify-between pb-1.5 border-b border-[var(--border)] mb-2">
+            <span class="font-bold text-[var(--foreground)]" id="insp-title">Device Inspector</span>
+            <span class="text-[10px] px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-400 font-mono" id="insp-badge">SW-Core-3560</span>
+          </div>
+          <div class="space-y-1.5 text-[11px]" id="insp-body">
+            <div><span class="text-[var(--muted-foreground)]">Model:</span> <span class="font-semibold" id="insp-model">Cisco Catalyst 3560-24PS</span></div>
+            <div><span class="text-[var(--muted-foreground)]">Role:</span> <span class="font-semibold" id="insp-role">Layer 3 Core / Inter-VLAN Routing</span></div>
+            <div><span class="text-[var(--muted-foreground)]">Uplinks:</span> <span class="font-mono text-[10px]" id="insp-ports">Gi0/2 (ASW1), Gi0/3 (ASW2), Gi0/4 (ASW3)</span></div>
+            <div><span class="text-[var(--muted-foreground)]">VLANs Configured:</span> <span class="text-emerald-400 font-mono text-[10px]" id="insp-vlans">10, 20, 30, 40, 50, 60, 70, 100</span></div>
+          </div>
+        </div>
+
+        <div class="mt-3 pt-2 border-t border-[var(--border)]">
+          <div class="text-[10px] text-[var(--muted-foreground)] mb-1">Cisco IOS Startup Configuration:</div>
+          <pre id="insp-cli" class="bg-slate-950 text-slate-300 font-mono text-[9px] p-2 rounded overflow-x-auto max-h-24 border border-slate-800">hostname SW-Core-3560
+ip routing
+vlan 10,20,30,40,50,60,70,100
+interface Gi0/2
+ switchport mode trunk</pre>
+          <button onclick="copyCurrentCLI()" class="w-full mt-1.5 py-1 text-center bg-blue-600 hover:bg-blue-500 text-white text-[11px] font-semibold rounded transition">
+            📋 Copy CLI Config
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const devData = {
+      'core': {
+        title: 'Core Switch',
+        badge: 'SW-Core-3560',
+        model: 'Cisco Catalyst 3560-24PS (Multilayer Switch)',
+        role: 'Central L3 Inter-VLAN Routing & Default Gateways',
+        ports: 'Gi0/1->ASA, Gi0/2->ASW1, Gi0/3->ASW2, Gi0/4->ASW3, Fa0/1-2->Servers',
+        vlans: 'VLAN 10, 20, 30, 40, 50, 60, 70, 100, 99',
+        cli: 'hostname SW-Core-3560\\nip routing\\ninterface Gi0/2\\n switchport trunk encapsulation dot1q\\n switchport mode trunk\\ninterface Fa0/1\\n switchport access vlan 100'
+      },
+      'router': {
+        title: 'Edge Router',
+        badge: 'R1-Edge-2911',
+        model: 'Cisco 2911 ISR (Modular Router)',
+        role: 'Internet WAN Gateway & NAT Translation',
+        ports: 'Gi0/0 -> ISP Cloud, Gi0/1 -> ASA Gi1/1',
+        vlans: 'Routed Point-to-Point Transit',
+        cli: 'hostname R1-Edge-2911\\ninterface Gi0/0\\n description WAN Uplink\\ninterface Gi0/1\\n description Link to ASA\\nno shutdown'
+      },
+      'firewall': {
+        title: 'Perimeter Firewall',
+        badge: 'FW-Perimeter-5506',
+        model: 'Cisco ASA 5506-X Security Appliance',
+        role: 'Stateful Packet Inspection & Edge Protection',
+        ports: 'Gi1/1 (Outside, Sec 0), Gi1/2 (Inside, Sec 100)',
+        vlans: 'DMZ / Perimeter Boundaries',
+        cli: 'hostname FW-Perimeter-5506\\ninterface Gi1/1\\n nameif outside\\n security-level 0\\ninterface Gi1/2\\n nameif inside\\n security-level 100'
+      },
+      'asw1': {
+        title: 'Floor 1 Switch',
+        badge: 'SW-ASW1-Floor1',
+        model: 'Cisco Catalyst 2960-24TT (Layer 2)',
+        role: 'Floor 1 Access: HR (VLAN 10) & Finance (VLAN 20)',
+        ports: 'Gi0/1 Trunk to Core, Fa0/1-2 HR, Fa0/3-4 Finance',
+        vlans: 'VLAN 10, VLAN 20, Native 99',
+        cli: 'hostname SW-ASW1-Floor1\\ninterface Gi0/1\\n switchport mode trunk\\ninterface range Fa0/1-2\\n switchport access vlan 10\\ninterface range Fa0/3-4\\n switchport access vlan 20'
+      },
+      'asw2': {
+        title: 'Ground Switch',
+        badge: 'SW-ASW2-Ground',
+        model: 'Cisco Catalyst 2960-24TT (Layer 2)',
+        role: 'Ground Floor: Customer Support (50) & Sales (40)',
+        ports: 'Gi0/1 Trunk to Core, Fa0/1-3 Support, Fa0/4-6 Sales',
+        vlans: 'VLAN 40, VLAN 50, VLAN 70 (Guest)',
+        cli: 'hostname SW-ASW2-Ground\\ninterface Gi0/1\\n switchport mode trunk\\ninterface range Fa0/1-3\\n switchport access vlan 50\\ninterface range Fa0/4-6\\n switchport access vlan 40'
+      },
+      'asw3': {
+        title: 'Floor 2 Switch',
+        badge: 'SW-ASW3-Floor2',
+        model: 'Cisco Catalyst 2960-24TT (Layer 2)',
+        role: 'Floor 2: IT Engineering (30) & Management (60)',
+        ports: 'Gi0/1 Trunk to Core, Fa0/1-3 IT Dept, Fa0/4-5 Management',
+        vlans: 'VLAN 30, VLAN 60, Native 99',
+        cli: 'hostname SW-ASW3-Floor2\\ninterface Gi0/1\\n switchport mode trunk\\ninterface range Fa0/1-3\\n switchport access vlan 30\\ninterface range Fa0/4-5\\n switchport access vlan 60'
+      },
+      'srv1': {
+        title: 'Central Server 1',
+        badge: 'SRV-DHCP-DNS',
+        model: 'Server-PT (Enterprise Server)',
+        role: 'Centralized DHCP Dynamic Scopes & DNS Resolver',
+        ports: 'FastEthernet0 connected to Core Switch Fa0/1',
+        vlans: 'VLAN 100 (Server Farm: 10.10.100.10)',
+        cli: 'IP: 10.10.100.10\\nSubnet: 255.255.255.0\\nGateway: 10.10.100.1\\nServices: DHCP Pools for VLAN 10-70, DNS for intranet.nexatech.com'
+      },
+      'srv2': {
+        title: 'Central Server 2',
+        badge: 'SRV-WEB-FILE',
+        model: 'Server-PT (Enterprise Server)',
+        role: 'Intranet HTTP Web Portal & FTP File Server',
+        ports: 'FastEthernet0 connected to Core Switch Fa0/2',
+        vlans: 'VLAN 100 (Server Farm: 10.10.100.20)',
+        cli: 'IP: 10.10.100.20\\nSubnet: 255.255.255.0\\nGateway: 10.10.100.1\\nServices: HTTP intranet.nexatech.com, FTP document repository'
+      },
+      'pc-hr': {
+        title: 'HR Workstation',
+        badge: 'PC-HR-01',
+        model: 'PC-PT Workstation',
+        role: 'Human Resources Client Endpoint',
+        ports: 'Fa0 connected to SW-ASW1 Fa0/1',
+        vlans: 'VLAN 10 (10.10.10.0/24)',
+        cli: 'IP: DHCP Auto-Assigned (10.10.10.x)\\nGateway: 10.10.10.1 (Core SVI)\\nDNS: 10.10.100.10'
+      }
+    };
+
+    function selectDev(key) {
+      const data = devData[key] || devData['core'];
+      document.getElementById('insp-title').innerText = data.title;
+      document.getElementById('insp-badge').innerText = data.badge;
+      document.getElementById('insp-model').innerText = data.model;
+      document.getElementById('insp-role').innerText = data.role;
+      document.getElementById('insp-ports').innerText = data.ports;
+      document.getElementById('insp-vlans').innerText = data.vlans;
+      document.getElementById('insp-cli').innerText = data.cli.replace(/\\n/g, '\n');
+      document.getElementById('status-text').innerText = 'Selected ' + data.badge + ' (' + data.title + ').';
+    }
+
+    function copyCurrentCLI() {
+      const text = document.getElementById('insp-cli').innerText;
+      navigator.clipboard.writeText(text);
+      document.getElementById('status-text').innerText = 'Copied CLI configuration to clipboard!';
+    }
+
+    function runPacketSimulation() {
+      const status = document.getElementById('status-text');
+      const ind = document.getElementById('ping-indicator');
+      const pkt = document.getElementById('anim-packet');
+      
+      ind.innerText = 'PING: IN PROGRESS...';
+      ind.className = 'text-xs font-mono font-bold text-amber-400';
+      status.innerText = '[Step 1/4] PC-HR-01 sends ICMP Echo Request to Core Gateway 10.10.10.1...';
+      
+      pkt.classList.remove('hidden');
+      
+      // Animate packet step 1: PC to ASW1
+      pkt.setAttribute('cx', 60); pkt.setAttribute('cy', 330);
+      
+      setTimeout(() => {
+        pkt.setAttribute('cx', 100); pkt.setAttribute('cy', 270);
+        status.innerText = '[Step 2/4] SW-ASW1 forwards tagged frame across 802.1Q Trunk (Gi0/1 -> Gi0/2)...';
+      }, 700);
+
+      setTimeout(() => {
+        pkt.setAttribute('cx', 290); pkt.setAttribute('cy', 200);
+        status.innerText = '[Step 3/4] SW-Core-3560 SVI VLAN 10 receives packet, executes wire-speed L3 routing to Server 1...';
+      }, 1400);
+
+      setTimeout(() => {
+        pkt.setAttribute('cx', 480); pkt.setAttribute('cy', 180);
+        status.innerText = '[Step 4/4] SRV-DHCP-DNS receives Echo! Reply returned successfully. RTT: <1ms.';
+        ind.innerText = 'STATUS: SUCCESS (100% PING)';
+        ind.className = 'text-xs font-mono font-bold text-emerald-400';
+      }, 2100);
+    }
+
+    function resetSimulation() {
+      document.getElementById('anim-packet').classList.add('hidden');
+      document.getElementById('status-text').innerText = 'Simulation reset. Ready for inspection.';
+      document.getElementById('ping-indicator').innerText = 'STATUS: IDLE';
+      document.getElementById('ping-indicator').className = 'text-xs font-mono font-bold text-slate-400';
+    }
+  </script>
+</body>
+</html>
