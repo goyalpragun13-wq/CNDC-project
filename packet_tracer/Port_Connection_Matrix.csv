@@ -1,0 +1,30 @@
+﻿Source Device,Source Port,Destination Device,Destination Port,Cable Type,Link Role,Target VLAN,Location
+ISP_Cloud,Eth 6,R1-Edge-2911,GigabitEthernet0/0,Copper Straight-Through,WAN Uplink,External / Public,MDF Server Room (Floor 2)
+R1-Edge-2911,GigabitEthernet0/1,FW-Perimeter-5506,GigabitEthernet1/1,Copper Straight-Through,Perimeter Transit (Outside),Routed / P2P,MDF Server Room (Floor 2)
+FW-Perimeter-5506,GigabitEthernet1/2,SW-Core-3560,GigabitEthernet0/1,Copper Straight-Through,Internal Transit (Inside),Routed / P2P,MDF Server Room (Floor 2)
+SW-Core-3560,GigabitEthernet0/2,SW-ASW1-Floor1,GigabitEthernet0/1,Copper Straight-Through,Vertical Backbone Trunk,Trunk (10,20,Native),MDF to IDF-2 (Floor 1)
+SW-Core-3560,GigabitEthernet0/3,SW-ASW2-Ground,GigabitEthernet0/1,Copper Straight-Through,Vertical Backbone Trunk,Trunk (40,50,70,Native),MDF to IDF-1 (Ground Floor)
+SW-Core-3560,GigabitEthernet0/4,SW-ASW3-Floor2,GigabitEthernet0/1,Copper Straight-Through,Vertical Backbone Trunk,Trunk (30,60,Native),MDF to IDF-3 (Floor 2)
+SW-Core-3560,FastEthernet0/1,SRV-DHCP-DNS,FastEthernet0,Copper Straight-Through,Server Farm Link,VLAN 100 (Servers),MDF Server Room (Floor 2)
+SW-Core-3560,FastEthernet0/2,SRV-WEB-FILE,FastEthernet0,Copper Straight-Through,Server Farm Link,VLAN 100 (Servers),MDF Server Room (Floor 2)
+SW-ASW1-Floor1,GigabitEthernet0/2,WAP-1F-Corp,Port 0,Copper Straight-Through,Wireless AP Uplink,Trunk / Access,Floor 1 Open Office
+SW-ASW1-Floor1,FastEthernet0/1,PC-HR-01,FastEthernet0,Copper Straight-Through,Workstation Access,VLAN 10 (HR),Floor 1 HR Office
+SW-ASW1-Floor1,FastEthernet0/2,PC-HR-02,FastEthernet0,Copper Straight-Through,Workstation Access,VLAN 10 (HR),Floor 1 HR Office
+SW-ASW1-Floor1,FastEthernet0/3,PC-FIN-01,FastEthernet0,Copper Straight-Through,Workstation Access,VLAN 20 (Finance),Floor 1 Finance Suite
+SW-ASW1-Floor1,FastEthernet0/4,PC-FIN-02,FastEthernet0,Copper Straight-Through,Workstation Access,VLAN 20 (Finance),Floor 1 Finance Suite
+SW-ASW2-Ground,GigabitEthernet0/2,WAP-GF-Guest,Port 0,Copper Straight-Through,Wireless AP Uplink,VLAN 70 (Guest),Ground Floor Reception
+SW-ASW2-Ground,FastEthernet0/1,PC-SUP-01,FastEthernet0,Copper Straight-Through,Workstation Access,VLAN 50 (Support),Ground Floor Support Pod 1
+SW-ASW2-Ground,FastEthernet0/2,PC-SUP-02,FastEthernet0,Copper Straight-Through,Workstation Access,VLAN 50 (Support),Ground Floor Support Pod 2
+SW-ASW2-Ground,FastEthernet0/3,PC-SUP-03,FastEthernet0,Copper Straight-Through,Workstation Access,VLAN 50 (Support),Ground Floor Support Pod 3
+SW-ASW2-Ground,FastEthernet0/4,PC-SALES-01,FastEthernet0,Copper Straight-Through,Workstation Access,VLAN 40 (Sales),Ground Floor Sales Bay A
+SW-ASW2-Ground,FastEthernet0/5,PC-SALES-02,FastEthernet0,Copper Straight-Through,Workstation Access,VLAN 40 (Sales),Ground Floor Sales Bay B
+SW-ASW2-Ground,FastEthernet0/6,PC-SALES-03,FastEthernet0,Copper Straight-Through,Workstation Access,VLAN 40 (Sales),Ground Floor Sales Bay C
+SW-ASW3-Floor2,GigabitEthernet0/2,WAP-2F-Exec,Port 0,Copper Straight-Through,Wireless AP Uplink,Trunk / Access,Floor 2 Conf Room
+SW-ASW3-Floor2,FastEthernet0/1,PC-IT-Admin-01,FastEthernet0,Copper Straight-Through,Workstation Access,VLAN 30 (IT),Floor 2 NOC / IT Lab
+SW-ASW3-Floor2,FastEthernet0/2,PC-IT-Admin-02,FastEthernet0,Copper Straight-Through,Workstation Access,VLAN 30 (IT),Floor 2 NOC / IT Lab
+SW-ASW3-Floor2,FastEthernet0/3,Laptop-IT-Eng,FastEthernet0,Copper Straight-Through,Workstation Access,VLAN 30 (IT),Floor 2 NOC / IT Lab
+SW-ASW3-Floor2,FastEthernet0/4,PC-MGMT-CEO,FastEthernet0,Copper Straight-Through,Workstation Access,VLAN 60 (Mgmt),Floor 2 Executive Suite
+SW-ASW3-Floor2,FastEthernet0/5,Laptop-MGMT-Dir,FastEthernet0,Copper Straight-Through,Workstation Access,VLAN 60 (Mgmt),Floor 2 Boardroom
+WAP-GF-Guest,Wireless,Laptop-Guest-01,Wireless0,Wireless 802.11n,Wireless Station,VLAN 70 (Guest),Ground Floor Lobby
+WAP-GF-Guest,Wireless,Smartphone-Guest,Wireless0,Wireless 802.11n,Wireless Station,VLAN 70 (Guest),Ground Floor Lobby
+WAP-1F-Corp,Wireless,Laptop-Mobile-01,Wireless0,Wireless 802.11n,Wireless Station,Corporate Wi-Fi,Floor 1 Breakout Area

@@ -1,0 +1,167 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><title>NexaTech Topologies</title>
+<style>body{background:#0b0f19;color:#f8fafc;font-family:sans-serif;padding:20px;} button{background:#1e293b;color:#fff;border:1px solid #475569;padding:10px 20px;cursor:pointer;border-radius:6px;margin-right:10px;} button.active{background:#0284c7;} .view{display:none;margin-top:20px;} .view.active{display:block;}</style>
+</head><body><h1>NexaTech Solutions - Network Topologies</h1>
+<div><button onclick="show('log')" id="blog" class="active">Logical Topology</button><button onclick="show('phy')" id="bphy">Physical Layout</button></div>
+<div id="log" class="view active"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="100%" height="100%" style="background:#0f172a; font-family:'Segoe UI',system-ui,sans-serif;">
+  <defs>
+    <linearGradient id="cloudGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#0284c7"/></linearGradient>
+    <linearGradient id="routerGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3b82f6"/><stop offset="100%" stop-color="#1d4ed8"/></linearGradient>
+    <linearGradient id="firewallGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ef4444"/><stop offset="100%" stop-color="#b91c1c"/></linearGradient>
+    <linearGradient id="coreGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#8b5cf6"/><stop offset="100%" stop-color="#6d28d9"/></linearGradient>
+    <linearGradient id="switchGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#10b981"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+    <linearGradient id="serverGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+  </defs>
+  <rect x="30" y="20" width="1140" height="70" rx="12" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+  <text x="60" y="52" fill="#f8fafc" font-size="22" font-weight="700">NexaTech Solutions Pvt. Ltd. — Enterprise Logical Network Topology</text>
+  <text x="60" y="74" fill="#94a3b8" font-size="13">Designed by: Member 1 (Network Design Engineer) | Tiered Hierarchical Campus Architecture</text>
+  <rect x="980" y="35" width="160" height="40" rx="8" fill="#0284c7" opacity="0.2" stroke="#38bdf8" stroke-width="1"/>
+  <text x="1060" y="60" fill="#38bdf8" font-size="12" font-weight="600" text-anchor="middle">140 USERS | 8 VLANS</text>
+  <g transform="translate(540, 115)">
+    <ellipse cx="60" cy="35" rx="75" ry="35" fill="url(#cloudGrad)" opacity="0.9"/>
+    <text x="60" y="32" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">ISP / Internet</text>
+    <text x="60" y="48" fill="#e0f2fe" font-size="11" text-anchor="middle">Public WAN Cloud</text>
+  </g>
+  <line x1="600" y1="185" x2="600" y2="220" stroke="#38bdf8" stroke-width="2.5" stroke-dasharray="4"/>
+  <text x="610" y="205" fill="#38bdf8" font-size="10">Gi0/0</text>
+  <g transform="translate(510, 220)">
+    <rect x="0" y="0" width="180" height="55" rx="10" fill="url(#routerGrad)" stroke="#60a5fa" stroke-width="1.5"/>
+    <text x="90" y="26" fill="#ffffff" font-size="13" font-weight="700" text-anchor="middle">R1-Edge-2911</text>
+    <text x="90" y="42" fill="#bfdbfe" font-size="11" text-anchor="middle">Cisco 2911 ISR</text>
+  </g>
+  <line x1="600" y1="275" x2="600" y2="315" stroke="#f87171" stroke-width="2.5"/>
+  <text x="565" y="295" fill="#94a3b8" font-size="10">Gi0/1</text>
+  <text x="610" y="295" fill="#f87171" font-size="10">Gi1/1 (Outside)</text>
+  <g transform="translate(500, 315)">
+    <rect x="0" y="0" width="200" height="55" rx="10" fill="url(#firewallGrad)" stroke="#f87171" stroke-width="1.5"/>
+    <text x="100" y="26" fill="#ffffff" font-size="13" font-weight="700" text-anchor="middle">FW-Perimeter-5506</text>
+    <text x="100" y="42" fill="#fecaca" font-size="11" text-anchor="middle">Cisco ASA 5506-X (Sec 0/100)</text>
+  </g>
+  <line x1="600" y1="370" x2="600" y2="415" stroke="#a78bfa" stroke-width="2.5"/>
+  <text x="555" y="392" fill="#f87171" font-size="10">Gi1/2 (Inside)</text>
+  <text x="610" y="392" fill="#a78bfa" font-size="10">Gi0/1</text>
+  <g transform="translate(480, 415)">
+    <rect x="0" y="0" width="240" height="65" rx="12" fill="url(#coreGrad)" stroke="#c084fc" stroke-width="2"/>
+    <text x="120" y="28" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">SW-Core-3560</text>
+    <text x="120" y="44" fill="#e9d5ff" font-size="11" text-anchor="middle">Cisco Catalyst 3560-24PS</text>
+    <text x="120" y="58" fill="#a7f3d0" font-size="10" font-weight="600" text-anchor="middle">Layer 3 Inter-VLAN Routing</text>
+  </g>
+  <rect x="860" y="375" width="290" height="140" rx="12" fill="#1e293b" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="6"/>
+  <text x="875" y="398" fill="#f59e0b" font-size="12" font-weight="700">SERVER FARM (VLAN 100)</text>
+  <text x="1040" y="398" fill="#94a3b8" font-size="11">10.10.100.0/24</text>
+  <line x1="720" y1="435" x2="880" y2="435" stroke="#f59e0b" stroke-width="2"/>
+  <text x="730" y="428" fill="#f59e0b" font-size="10">Fa0/1</text>
+  <line x1="720" y1="455" x2="880" y2="485" stroke="#f59e0b" stroke-width="2"/>
+  <text x="730" y="470" fill="#f59e0b" font-size="10">Fa0/2</text>
+  <g transform="translate(880, 415)"><rect x="0" y="0" width="250" height="38" rx="6" fill="url(#serverGrad)"/><text x="20" y="24" fill="#ffffff" font-size="14">SRV-DHCP-DNS</text><text x="150" y="24" fill="#fef3c7" font-size="10">DHCP &amp; DNS</text></g>
+  <g transform="translate(880, 465)"><rect x="0" y="0" width="250" height="38" rx="6" fill="url(#serverGrad)"/><text x="20" y="24" fill="#ffffff" font-size="14">SRV-WEB-FILE</text><text x="150" y="24" fill="#fef3c7" font-size="10">Web &amp; FTP</text></g>
+  <path d="M 510 480 L 230 550" stroke="#10b981" stroke-width="2.5"/>
+  <path d="M 600 480 L 600 550" stroke="#10b981" stroke-width="2.5"/>
+  <path d="M 690 480 L 970 550" stroke="#10b981" stroke-width="2.5"/>
+  <g transform="translate(120, 550)"><rect x="0" y="0" width="220" height="60" rx="10" fill="url(#switchGrad)" stroke="#34d399" stroke-width="1.5"/><text x="110" y="25" fill="#ffffff" font-size="13" font-weight="700" text-anchor="middle">SW-ASW2-Ground</text><text x="110" y="41" fill="#d1fae5" font-size="11" text-anchor="middle">Cisco 2960-24TT (Ground Floor)</text></g>
+  <g transform="translate(490, 550)"><rect x="0" y="0" width="220" height="60" rx="10" fill="url(#switchGrad)" stroke="#34d399" stroke-width="1.5"/><text x="110" y="25" fill="#ffffff" font-size="13" font-weight="700" text-anchor="middle">SW-ASW1-Floor1</text><text x="110" y="41" fill="#d1fae5" font-size="11" text-anchor="middle">Cisco 2960-24TT (Floor 1)</text></g>
+  <g transform="translate(860, 550)"><rect x="0" y="0" width="220" height="60" rx="10" fill="url(#switchGrad)" stroke="#34d399" stroke-width="1.5"/><text x="110" y="25" fill="#ffffff" font-size="13" font-weight="700" text-anchor="middle">SW-ASW3-Floor2</text><text x="110" y="41" fill="#d1fae5" font-size="11" text-anchor="middle">Cisco 2960-24TT (Floor 2)</text></g>
+  <g transform="translate(60, 630)"><rect x="0" y="0" width="340" height="190" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="1"/>
+    <text x="170" y="22" fill="#38bdf8" font-size="12" font-weight="700" text-anchor="middle">Ground Floor: Support (40), Sales (30), Guest</text>
+    <text x="15" y="50" fill="#cbd5e1" font-size="11">• Support (VLAN 50, 10.10.50.0/24): PC-SUP-01/02/03</text>
+    <text x="15" y="75" fill="#cbd5e1" font-size="11">• Sales (VLAN 40, 10.10.40.0/24): PC-SALES-01/02/03</text>
+    <text x="15" y="100" fill="#cbd5e1" font-size="11">• Guest Wi-Fi (VLAN 70, 10.10.70.0/24): WAP-GF-Guest</text>
+    <text x="15" y="125" fill="#94a3b8" font-size="10">Uplink: Gi0/1 802.1Q Trunk to Core Gi0/3</text>
+  </g>
+  <g transform="translate(430, 630)"><rect x="0" y="0" width="340" height="190" rx="8" fill="#1e293b" stroke="#06b6d4" stroke-width="1"/>
+    <text x="170" y="22" fill="#22d3ee" font-size="12" font-weight="700" text-anchor="middle">First Floor: HR (15) &amp; Finance (20)</text>
+    <text x="15" y="50" fill="#cbd5e1" font-size="11">• HR (VLAN 10, 10.10.10.0/24): PC-HR-01, PC-HR-02</text>
+    <text x="15" y="75" fill="#cbd5e1" font-size="11">• Finance (VLAN 20, 10.10.20.0/24): PC-FIN-01, PC-FIN-02</text>
+    <text x="15" y="100" fill="#cbd5e1" font-size="11">• Corp Wi-Fi: WAP-1F-Corp (Laptops/Handhelds)</text>
+    <text x="15" y="125" fill="#94a3b8" font-size="10">Uplink: Gi0/1 802.1Q Trunk to Core Gi0/2</text>
+  </g>
+  <g transform="translate(800, 630)"><rect x="0" y="0" width="340" height="190" rx="8" fill="#1e293b" stroke="#eab308" stroke-width="1"/>
+    <text x="170" y="22" fill="#fde047" font-size="12" font-weight="700" text-anchor="middle">Second Floor: IT (25) &amp; Management (10)</text>
+    <text x="15" y="50" fill="#cbd5e1" font-size="11">• IT (VLAN 30, 10.10.30.0/24): PC-IT-01, PC-IT-02, Laptop</text>
+    <text x="15" y="75" fill="#cbd5e1" font-size="11">• Mgmt (VLAN 60, 10.10.60.0/24): PC-MGMT-CEO, Laptop</text>
+    <text x="15" y="100" fill="#cbd5e1" font-size="11">• Exec Wi-Fi: WAP-2F-Exec (Executive Mobility)</text>
+    <text x="15" y="125" fill="#94a3b8" font-size="10">Uplink: Gi0/1 802.1Q Trunk to Core Gi0/4</text>
+  </g>
+  <g transform="translate(50, 845)"><rect x="0" y="0" width="1100" height="40" rx="6" fill="#1e293b" stroke="#334155"/>
+    <text x="550" y="24" fill="#94a3b8" font-size="11" text-anchor="middle">Blue: WAN | Red: Perimeter Security | Purple: Layer 3 Core Routing | Green: 802.1Q Trunks | Yellow: Server Farm</text>
+  </g>
+</svg></div>
+<div id="phy" class="view"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 950" width="100%" height="100%" style="background:#0f172a; font-family:'Segoe UI',system-ui,sans-serif;">
+  <rect x="30" y="20" width="1140" height="70" rx="12" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+  <text x="60" y="52" fill="#f8fafc" font-size="22" font-weight="700">NexaTech Solutions Pvt. Ltd. — 3-Floor Physical Network Layout</text>
+  <text x="60" y="74" fill="#94a3b8" font-size="13">Physical Building Structure, MDF Server Room, IDF Wiring Closets &amp; Vertical Backbone Risers</text>
+  <rect x="980" y="35" width="160" height="40" rx="8" fill="#10b981" opacity="0.2" stroke="#10b981" stroke-width="1"/>
+  <text x="1060" y="60" fill="#34d399" font-size="12" font-weight="600" text-anchor="middle">MDF + 3 IDFs</text>
+  <rect x="495" y="110" width="60" height="760" fill="#1e293b" stroke="#475569" stroke-dasharray="4" rx="4"/>
+  <text x="525" y="885" fill="#94a3b8" font-size="10" font-weight="600" text-anchor="middle">RISER SHAFT</text>
+  <g transform="translate(50, 110)">
+    <rect x="0" y="0" width="1100" height="230" rx="12" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+    <rect x="0" y="0" width="1100" height="32" rx="12" fill="#1d4ed8" opacity="0.4"/>
+    <text x="20" y="22" fill="#93c5fd" font-size="14" font-weight="700">SECOND FLOOR (LEVEL 2) — IT ENGINEERING, EXECUTIVE MANAGEMENT &amp; CENTRAL MDF</text>
+    <rect x="490" y="42" width="350" height="175" rx="8" fill="#312e81" stroke="#818cf8" stroke-width="2"/>
+    <text x="665" y="62" fill="#ffffff" font-size="12" font-weight="700" text-anchor="middle">MDF SERVER ROOM</text>
+    <rect x="505" y="76" width="155" height="130" rx="6" fill="#0f172a" stroke="#6366f1"/>
+    <text x="582" y="94" fill="#a5b4fc" font-size="10" font-weight="700" text-anchor="middle">42U CORE RACK</text>
+    <text x="582" y="116" fill="#ffffff" font-size="9" text-anchor="middle">R1-Edge-2911 (1U)</text>
+    <text x="582" y="136" fill="#f87171" font-size="9" text-anchor="middle">FW-ASA-5506-X (1U)</text>
+    <text x="582" y="156" fill="#c084fc" font-size="9" text-anchor="middle">SW-Core-3560 L3 (1U)</text>
+    <text x="582" y="176" fill="#94a3b8" font-size="8" text-anchor="middle">Patch Panels &amp; Fiber LIU</text>
+    <rect x="670" y="76" width="155" height="130" rx="6" fill="#0f172a" stroke="#f59e0b"/>
+    <text x="747" y="94" fill="#fcd34d" font-size="10" font-weight="700" text-anchor="middle">SERVER RACK</text>
+    <text x="747" y="120" fill="#fef3c7" font-size="9" text-anchor="middle">SRV-DHCP-DNS (2U)</text>
+    <text x="747" y="145" fill="#fef3c7" font-size="9" text-anchor="middle">SRV-WEB-FILE (2U)</text>
+    <text x="747" y="170" fill="#a7f3d0" font-size="8" text-anchor="middle">Online UPS Battery</text>
+    <rect x="360" y="45" width="110" height="75" rx="6" fill="#0f172a" stroke="#10b981" stroke-width="1.5"/>
+    <text x="415" y="65" fill="#34d399" font-size="10" font-weight="700" text-anchor="middle">IDF-3 RACK</text>
+    <text x="415" y="85" fill="#ffffff" font-size="8" text-anchor="middle">SW-ASW3-Floor2</text>
+    <rect x="20" y="45" width="320" height="175" rx="8" fill="#0f172a" stroke="#eab308" stroke-width="1"/>
+    <text x="35" y="68" fill="#fde047" font-size="12" font-weight="700">IT Department (25 Staff)</text>
+    <text x="35" y="95" fill="#cbd5e1" font-size="10">• NOC &amp; Developer Stations</text>
+    <text x="35" y="115" fill="#cbd5e1" font-size="10">• Cat6 Horizontal Drops &lt;30m</text>
+    <text x="35" y="135" fill="#38bdf8" font-size="10">📡 WAP-2F-Exec AP</text>
+    <rect x="860" y="45" width="220" height="175" rx="8" fill="#0f172a" stroke="#f97316" stroke-width="1"/>
+    <text x="875" y="68" fill="#fdba74" font-size="12" font-weight="700">Executive Mgmt (10 Staff)</text>
+    <text x="875" y="95" fill="#cbd5e1" font-size="10">• CEO / Boardroom Suites</text>
+    <text x="875" y="115" fill="#cbd5e1" font-size="10">• Secure Wall Drops</text>
+  </g>
+  <g transform="translate(50, 370)">
+    <rect x="0" y="0" width="1100" height="230" rx="12" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+    <rect x="0" y="0" width="1100" height="32" rx="12" fill="#059669" opacity="0.4"/>
+    <text x="20" y="22" fill="#a7f3d0" font-size="14" font-weight="700">FIRST FLOOR (LEVEL 1) — COMMERCIAL OPERATIONS (HR, FINANCE, SALES)</text>
+    <rect x="470" y="45" width="130" height="100" rx="6" fill="#0f172a" stroke="#10b981" stroke-width="2"/>
+    <text x="535" y="65" fill="#34d399" font-size="11" font-weight="700" text-anchor="middle">IDF-2 RACK</text>
+    <text x="535" y="85" fill="#ffffff" font-size="9" text-anchor="middle">SW-ASW1-Floor1</text>
+    <text x="535" y="105" fill="#94a3b8" font-size="8" text-anchor="middle">Cat6 Patch Panel</text>
+    <text x="535" y="125" fill="#38bdf8" font-size="9" text-anchor="middle">📡 WAP-1F-Corp AP</text>
+    <rect x="20" y="45" width="200" height="170" rx="8" fill="#0f172a" stroke="#06b6d4" stroke-width="1"/>
+    <text x="35" y="68" fill="#22d3ee" font-size="12" font-weight="700">HR Dept (15 Staff)</text>
+    <text x="35" y="95" fill="#cbd5e1" font-size="10">• Workstations &amp; Printers</text>
+    <rect x="240" y="45" width="210" height="170" rx="8" fill="#0f172a" stroke="#10b981" stroke-width="1"/>
+    <text x="255" y="68" fill="#34d399" font-size="12" font-weight="700">Finance Dept (20 Staff)</text>
+    <text x="255" y="95" fill="#cbd5e1" font-size="10">• ERP / Accounting Pods</text>
+    <rect x="630" y="45" width="450" height="170" rx="8" fill="#0f172a" stroke="#f43f5e" stroke-width="1"/>
+    <text x="650" y="68" fill="#fb7185" font-size="12" font-weight="700">Sales Dept (30 Staff)</text>
+    <text x="650" y="95" fill="#cbd5e1" font-size="10">• Open Bays A, B, C | Dual Cat6 Faceplates</text>
+  </g>
+  <g transform="translate(50, 630)">
+    <rect x="0" y="0" width="1100" height="230" rx="12" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+    <rect x="0" y="0" width="1100" height="32" rx="12" fill="#d97706" opacity="0.4"/>
+    <text x="20" y="22" fill="#fde68a" font-size="14" font-weight="700">GROUND FLOOR (LEVEL 0) — RECEPTION, CUSTOMER SUPPORT &amp; GUEST SERVICES</text>
+    <rect x="470" y="45" width="130" height="100" rx="6" fill="#0f172a" stroke="#10b981" stroke-width="2"/>
+    <text x="535" y="65" fill="#34d399" font-size="11" font-weight="700" text-anchor="middle">IDF-1 RACK</text>
+    <text x="535" y="85" fill="#ffffff" font-size="9" text-anchor="middle">SW-ASW2-Ground</text>
+    <text x="535" y="105" fill="#94a3b8" font-size="8" text-anchor="middle">Cat6 Patch Panel</text>
+    <rect x="20" y="45" width="430" height="170" rx="8" fill="#0f172a" stroke="#38bdf8" stroke-width="1"/>
+    <text x="35" y="68" fill="#38bdf8" font-size="12" font-weight="700">Customer Support Center (40 Staff)</text>
+    <text x="35" y="95" fill="#cbd5e1" font-size="10">• High-Density 24/7 Support Workstations</text>
+    <rect x="630" y="45" width="450" height="170" rx="8" fill="#0f172a" stroke="#a855f7" stroke-width="1"/>
+    <text x="650" y="68" fill="#c084fc" font-size="12" font-weight="700">Reception &amp; Lobby</text>
+    <text x="650" y="95" fill="#c084fc" font-size="10">📡 WAP-GF-Guest (Isolated Visitor Wi-Fi)</text>
+  </g>
+  <line x1="520" y1="260" x2="520" y2="415" stroke="#34d399" stroke-width="3"/>
+  <line x1="530" y1="260" x2="530" y2="675" stroke="#34d399" stroke-width="3" stroke-dasharray="6"/>
+  <g transform="translate(50, 890)"><rect x="0" y="0" width="1100" height="45" rx="6" fill="#1e293b" stroke="#334155"/>
+    <text x="20" y="27" fill="#94a3b8" font-size="11">Horizontal: 1000BASE-T Cat6 UTP (&lt;90m) | Vertical Backbone: OM3 Multi-Mode Fiber / Cat6A Riser | TIA/EIA-568B</text>
+  </g>
+</svg></div>
+<script>function show(id){document.querySelectorAll(".view").forEach(e=>e.classList.remove("active"));document.querySelectorAll("button").forEach(e=>e.classList.remove("active"));document.getElementById(id).classList.add("active");document.getElementById(id=="log"?"blog":"bphy").classList.add("active");}</script>
+</body></html>

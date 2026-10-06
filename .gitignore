@@ -1,0 +1,4 @@
+﻿# Git Ignore
+__pycache__/
+*.pyc
+generate_*.py

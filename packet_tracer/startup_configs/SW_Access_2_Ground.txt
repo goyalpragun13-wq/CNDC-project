@@ -1,0 +1,68 @@
+! ========================================================
+! DEVICE: SW-ASW2-Ground (Cisco Catalyst 2960-24TT)
+! LOCATION: IDF-1 Rack (Ground Floor)
+! ROLE: Ground Floor Access Switch (Support, Sales, Guest)
+! ========================================================
+enable
+configure terminal
+hostname SW-ASW2-Ground
+no ip domain-lookup
+banner motd ^C
+**************************************************************
+* NEXATECH SOLUTIONS - GROUND FLOOR ACCESS SWITCH           *
+**************************************************************
+^C
+
+! Define Local VLANs
+vlan 40
+ name Sales_Dept
+vlan 50
+ name Cust_Support
+vlan 70
+ name Guest_Network
+vlan 99
+ name Management_Native
+exit
+
+! Uplink to Core Switch
+interface GigabitEthernet0/1
+ description Trunk Uplink to SW-Core-3560 Gi0/3
+ switchport mode trunk
+ switchport trunk native vlan 99
+ no shutdown
+ exit
+
+! Ground Floor Reception Guest Wireless AP (VLAN 70)
+interface GigabitEthernet0/2
+ description Dedicated Access to WAP-GF-Guest (Guest Wi-Fi)
+ switchport mode access
+ switchport access vlan 70
+ spanning-tree portfast
+ no shutdown
+ exit
+
+! Customer Support Workstations (VLAN 50)
+interface range FastEthernet0/1 - 3
+ description Customer Support Workstations
+ switchport mode access
+ switchport access vlan 50
+ spanning-tree portfast
+ no shutdown
+ exit
+
+! Sales Department Workstations (VLAN 40)
+interface range FastEthernet0/4 - 6
+ description Sales Department Workstations
+ switchport mode access
+ switchport access vlan 40
+ spanning-tree portfast
+ no shutdown
+ exit
+
+! Unused Ports Security Baseline
+interface range FastEthernet0/7 - 24
+ shutdown
+ exit
+
+end
+write memory

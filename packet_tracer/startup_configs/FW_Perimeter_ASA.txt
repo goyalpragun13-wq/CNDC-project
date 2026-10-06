@@ -1,0 +1,32 @@
+! ========================================================
+! DEVICE: FW-Perimeter-5506 (Cisco ASA 5506-X)
+! LOCATION: MDF Server Room (2nd Floor)
+! ROLE: Perimeter Next-Generation Firewall
+! ========================================================
+enable
+configure terminal
+hostname FW-Perimeter-5506
+domain-name nexatech.com
+banner motd ^C
+**************************************************************
+* WARNING: NexaTech Solutions Perimeter Security Gateway    *
+**************************************************************
+^C
+
+! Interface Initialization
+interface GigabitEthernet1/1
+ nameif outside
+ security-level 0
+ description Connected to Edge Router R1 Gi0/1
+ no shutdown
+ exit
+
+interface GigabitEthernet1/2
+ nameif inside
+ security-level 100
+ description Connected to Core Switch Gi0/1
+ no shutdown
+ exit
+
+end
+write memory

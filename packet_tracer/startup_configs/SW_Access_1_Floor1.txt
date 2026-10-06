@@ -1,0 +1,65 @@
+! ========================================================
+! DEVICE: SW-ASW1-Floor1 (Cisco Catalyst 2960-24TT)
+! LOCATION: IDF-2 Rack (1st Floor)
+! ROLE: Floor 1 Access Switch (HR & Finance)
+! ========================================================
+enable
+configure terminal
+hostname SW-ASW1-Floor1
+no ip domain-lookup
+banner motd ^C
+**************************************************************
+* NEXATECH SOLUTIONS - FLOOR 1 ACCESS SWITCH (HR & FINANCE)  *
+**************************************************************
+^C
+
+! Define Local VLANs
+vlan 10
+ name HR_Dept
+vlan 20
+ name Finance_Dept
+vlan 99
+ name Management_Native
+exit
+
+! Uplink to Core Switch
+interface GigabitEthernet0/1
+ description Trunk Uplink to SW-Core-3560 Gi0/2
+ switchport mode trunk
+ switchport trunk native vlan 99
+ no shutdown
+ exit
+
+! Floor 1 Corporate Wireless AP
+interface GigabitEthernet0/2
+ description Uplink to WAP-1F-Corp (Corporate Wireless)
+ switchport mode trunk
+ switchport trunk native vlan 99
+ no shutdown
+ exit
+
+! HR Department Workstations (VLAN 10)
+interface range FastEthernet0/1 - 2
+ description HR Department Workstations
+ switchport mode access
+ switchport access vlan 10
+ spanning-tree portfast
+ no shutdown
+ exit
+
+! Finance Department Workstations (VLAN 20)
+interface range FastEthernet0/3 - 4
+ description Finance Department Workstations
+ switchport mode access
+ switchport access vlan 20
+ spanning-tree portfast
+ no shutdown
+ exit
+
+! Unused Ports Security Baseline
+interface range FastEthernet0/5 - 24
+ shutdown
+ exit
+
+end
+write memory

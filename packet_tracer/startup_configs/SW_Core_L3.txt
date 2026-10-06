@@ -1,0 +1,89 @@
+! ========================================================
+! DEVICE: SW-Core-3560 (Cisco Catalyst 3560-24PS)
+! LOCATION: MDF Server Room (2nd Floor)
+! ROLE: Enterprise Layer 3 Core / Distribution Switch
+! ========================================================
+enable
+configure terminal
+hostname SW-Core-3560
+no ip domain-lookup
+banner motd ^C
+**************************************************************
+* NEXATECH SOLUTIONS - ENTERPRISE CORE LAYER 3 SWITCH       *
+**************************************************************
+^C
+
+! Enable Layer 3 Routing Engine
+ip routing
+
+! Pre-configure VLAN Database
+vlan 10
+ name HR_Dept
+vlan 20
+ name Finance_Dept
+vlan 30
+ name IT_Dept
+vlan 40
+ name Sales_Dept
+vlan 50
+ name Cust_Support
+vlan 60
+ name Management
+vlan 70
+ name Guest_Network
+vlan 100
+ name Server_Farm
+vlan 99
+ name Management_Native
+exit
+
+! Core to Firewall Transit Link
+interface GigabitEthernet0/1
+ description Transit Link to ASA Firewall Gi1/2 (Inside)
+ no shutdown
+ exit
+
+! Vertical Backbone 802.1Q Trunk Links to Access Switches
+interface GigabitEthernet0/2
+ description Uplink Trunk to SW-ASW1-Floor1 (HR & Finance)
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ switchport trunk native vlan 99
+ no shutdown
+ exit
+
+interface GigabitEthernet0/3
+ description Uplink Trunk to SW-ASW2-Ground (Support, Sales & Guest)
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ switchport trunk native vlan 99
+ no shutdown
+ exit
+
+interface GigabitEthernet0/4
+ description Uplink Trunk to SW-ASW3-Floor2 (IT & Management)
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ switchport trunk native vlan 99
+ no shutdown
+ exit
+
+! Server Farm Dedicated Host Ports (VLAN 100)
+interface FastEthernet0/1
+ description Server 1: Centralized DHCP + DNS (SRV-DHCP-DNS)
+ switchport mode access
+ switchport access vlan 100
+ spanning-tree portfast
+ no shutdown
+ exit
+
+interface FastEthernet0/2
+ description Server 2: Intranet Web + File Sharing (SRV-WEB-FILE)
+ switchport mode access
+ switchport access vlan 100
+ spanning-tree portfast
+ no shutdown
+ exit
+
+end
+write memory

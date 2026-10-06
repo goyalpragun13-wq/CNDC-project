@@ -1,0 +1,65 @@
+! ========================================================
+! DEVICE: SW-ASW3-Floor2 (Cisco Catalyst 2960-24TT)
+! LOCATION: IDF-3 Rack (2nd Floor)
+! ROLE: Floor 2 Access Switch (IT & Executive Management)
+! ========================================================
+enable
+configure terminal
+hostname SW-ASW3-Floor2
+no ip domain-lookup
+banner motd ^C
+**************************************************************
+* NEXATECH SOLUTIONS - FLOOR 2 ACCESS SWITCH (IT & EXEC)     *
+**************************************************************
+^C
+
+! Define Local VLANs
+vlan 30
+ name IT_Dept
+vlan 60
+ name Management
+vlan 99
+ name Management_Native
+exit
+
+! Uplink to Core Switch
+interface GigabitEthernet0/1
+ description Trunk Uplink to SW-Core-3560 Gi0/4
+ switchport mode trunk
+ switchport trunk native vlan 99
+ no shutdown
+ exit
+
+! Floor 2 Executive Wireless AP
+interface GigabitEthernet0/2
+ description Uplink to WAP-2F-Exec (Executive Wireless)
+ switchport mode trunk
+ switchport trunk native vlan 99
+ no shutdown
+ exit
+
+! IT Department Workstations (VLAN 30)
+interface range FastEthernet0/1 - 3
+ description IT Engineering & Administration Workstations
+ switchport mode access
+ switchport access vlan 30
+ spanning-tree portfast
+ no shutdown
+ exit
+
+! Executive Management Workstations (VLAN 60)
+interface range FastEthernet0/4 - 5
+ description Executive Management Workstations
+ switchport mode access
+ switchport access vlan 60
+ spanning-tree portfast
+ no shutdown
+ exit
+
+! Unused Ports Security Baseline
+interface range FastEthernet0/6 - 24
+ shutdown
+ exit
+
+end
+write memory

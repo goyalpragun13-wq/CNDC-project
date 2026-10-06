@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 950" width="100%" height="100%" style="background:#0f172a; font-family:'Segoe UI',system-ui,sans-serif;">
+  <rect x="30" y="20" width="1140" height="70" rx="12" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+  <text x="60" y="52" fill="#f8fafc" font-size="22" font-weight="700">NexaTech Solutions Pvt. Ltd. — 3-Floor Physical Network Layout</text>
+  <text x="60" y="74" fill="#94a3b8" font-size="13">Physical Building Structure, MDF Server Room, IDF Wiring Closets &amp; Vertical Backbone Risers</text>
+  <rect x="980" y="35" width="160" height="40" rx="8" fill="#10b981" opacity="0.2" stroke="#10b981" stroke-width="1"/>
+  <text x="1060" y="60" fill="#34d399" font-size="12" font-weight="600" text-anchor="middle">MDF + 3 IDFs</text>
+  <rect x="495" y="110" width="60" height="760" fill="#1e293b" stroke="#475569" stroke-dasharray="4" rx="4"/>
+  <text x="525" y="885" fill="#94a3b8" font-size="10" font-weight="600" text-anchor="middle">RISER SHAFT</text>
+  <g transform="translate(50, 110)">
+    <rect x="0" y="0" width="1100" height="230" rx="12" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+    <rect x="0" y="0" width="1100" height="32" rx="12" fill="#1d4ed8" opacity="0.4"/>
+    <text x="20" y="22" fill="#93c5fd" font-size="14" font-weight="700">SECOND FLOOR (LEVEL 2) — IT ENGINEERING, EXECUTIVE MANAGEMENT &amp; CENTRAL MDF</text>
+    <rect x="490" y="42" width="350" height="175" rx="8" fill="#312e81" stroke="#818cf8" stroke-width="2"/>
+    <text x="665" y="62" fill="#ffffff" font-size="12" font-weight="700" text-anchor="middle">MDF SERVER ROOM</text>
+    <rect x="505" y="76" width="155" height="130" rx="6" fill="#0f172a" stroke="#6366f1"/>
+    <text x="582" y="94" fill="#a5b4fc" font-size="10" font-weight="700" text-anchor="middle">42U CORE RACK</text>
+    <text x="582" y="116" fill="#ffffff" font-size="9" text-anchor="middle">R1-Edge-2911 (1U)</text>
+    <text x="582" y="136" fill="#f87171" font-size="9" text-anchor="middle">FW-ASA-5506-X (1U)</text>
+    <text x="582" y="156" fill="#c084fc" font-size="9" text-anchor="middle">SW-Core-3560 L3 (1U)</text>
+    <text x="582" y="176" fill="#94a3b8" font-size="8" text-anchor="middle">Patch Panels &amp; Fiber LIU</text>
+    <rect x="670" y="76" width="155" height="130" rx="6" fill="#0f172a" stroke="#f59e0b"/>
+    <text x="747" y="94" fill="#fcd34d" font-size="10" font-weight="700" text-anchor="middle">SERVER RACK</text>
+    <text x="747" y="120" fill="#fef3c7" font-size="9" text-anchor="middle">SRV-DHCP-DNS (2U)</text>
+    <text x="747" y="145" fill="#fef3c7" font-size="9" text-anchor="middle">SRV-WEB-FILE (2U)</text>
+    <text x="747" y="170" fill="#a7f3d0" font-size="8" text-anchor="middle">Online UPS Battery</text>
+    <rect x="360" y="45" width="110" height="75" rx="6" fill="#0f172a" stroke="#10b981" stroke-width="1.5"/>
+    <text x="415" y="65" fill="#34d399" font-size="10" font-weight="700" text-anchor="middle">IDF-3 RACK</text>
+    <text x="415" y="85" fill="#ffffff" font-size="8" text-anchor="middle">SW-ASW3-Floor2</text>
+    <rect x="20" y="45" width="320" height="175" rx="8" fill="#0f172a" stroke="#eab308" stroke-width="1"/>
+    <text x="35" y="68" fill="#fde047" font-size="12" font-weight="700">IT Department (25 Staff)</text>
+    <text x="35" y="95" fill="#cbd5e1" font-size="10">• NOC &amp; Developer Stations</text>
+    <text x="35" y="115" fill="#cbd5e1" font-size="10">• Cat6 Horizontal Drops &lt;30m</text>
+    <text x="35" y="135" fill="#38bdf8" font-size="10">📡 WAP-2F-Exec AP</text>
+    <rect x="860" y="45" width="220" height="175" rx="8" fill="#0f172a" stroke="#f97316" stroke-width="1"/>
+    <text x="875" y="68" fill="#fdba74" font-size="12" font-weight="700">Executive Mgmt (10 Staff)</text>
+    <text x="875" y="95" fill="#cbd5e1" font-size="10">• CEO / Boardroom Suites</text>
+    <text x="875" y="115" fill="#cbd5e1" font-size="10">• Secure Wall Drops</text>
+  </g>
+  <g transform="translate(50, 370)">
+    <rect x="0" y="0" width="1100" height="230" rx="12" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+    <rect x="0" y="0" width="1100" height="32" rx="12" fill="#059669" opacity="0.4"/>
+    <text x="20" y="22" fill="#a7f3d0" font-size="14" font-weight="700">FIRST FLOOR (LEVEL 1) — COMMERCIAL OPERATIONS (HR, FINANCE, SALES)</text>
+    <rect x="470" y="45" width="130" height="100" rx="6" fill="#0f172a" stroke="#10b981" stroke-width="2"/>
+    <text x="535" y="65" fill="#34d399" font-size="11" font-weight="700" text-anchor="middle">IDF-2 RACK</text>
+    <text x="535" y="85" fill="#ffffff" font-size="9" text-anchor="middle">SW-ASW1-Floor1</text>
+    <text x="535" y="105" fill="#94a3b8" font-size="8" text-anchor="middle">Cat6 Patch Panel</text>
+    <text x="535" y="125" fill="#38bdf8" font-size="9" text-anchor="middle">📡 WAP-1F-Corp AP</text>
+    <rect x="20" y="45" width="200" height="170" rx="8" fill="#0f172a" stroke="#06b6d4" stroke-width="1"/>
+    <text x="35" y="68" fill="#22d3ee" font-size="12" font-weight="700">HR Dept (15 Staff)</text>
+    <text x="35" y="95" fill="#cbd5e1" font-size="10">• Workstations &amp; Printers</text>
+    <rect x="240" y="45" width="210" height="170" rx="8" fill="#0f172a" stroke="#10b981" stroke-width="1"/>
+    <text x="255" y="68" fill="#34d399" font-size="12" font-weight="700">Finance Dept (20 Staff)</text>
+    <text x="255" y="95" fill="#cbd5e1" font-size="10">• ERP / Accounting Pods</text>
+    <rect x="630" y="45" width="450" height="170" rx="8" fill="#0f172a" stroke="#f43f5e" stroke-width="1"/>
+    <text x="650" y="68" fill="#fb7185" font-size="12" font-weight="700">Sales Dept (30 Staff)</text>
+    <text x="650" y="95" fill="#cbd5e1" font-size="10">• Open Bays A, B, C | Dual Cat6 Faceplates</text>
+  </g>
+  <g transform="translate(50, 630)">
+    <rect x="0" y="0" width="1100" height="230" rx="12" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+    <rect x="0" y="0" width="1100" height="32" rx="12" fill="#d97706" opacity="0.4"/>
+    <text x="20" y="22" fill="#fde68a" font-size="14" font-weight="700">GROUND FLOOR (LEVEL 0) — RECEPTION, CUSTOMER SUPPORT &amp; GUEST SERVICES</text>
+    <rect x="470" y="45" width="130" height="100" rx="6" fill="#0f172a" stroke="#10b981" stroke-width="2"/>
+    <text x="535" y="65" fill="#34d399" font-size="11" font-weight="700" text-anchor="middle">IDF-1 RACK</text>
+    <text x="535" y="85" fill="#ffffff" font-size="9" text-anchor="middle">SW-ASW2-Ground</text>
+    <text x="535" y="105" fill="#94a3b8" font-size="8" text-anchor="middle">Cat6 Patch Panel</text>
+    <rect x="20" y="45" width="430" height="170" rx="8" fill="#0f172a" stroke="#38bdf8" stroke-width="1"/>
+    <text x="35" y="68" fill="#38bdf8" font-size="12" font-weight="700">Customer Support Center (40 Staff)</text>
+    <text x="35" y="95" fill="#cbd5e1" font-size="10">• High-Density 24/7 Support Workstations</text>
+    <rect x="630" y="45" width="450" height="170" rx="8" fill="#0f172a" stroke="#a855f7" stroke-width="1"/>
+    <text x="650" y="68" fill="#c084fc" font-size="12" font-weight="700">Reception &amp; Lobby</text>
+    <text x="650" y="95" fill="#c084fc" font-size="10">📡 WAP-GF-Guest (Isolated Visitor Wi-Fi)</text>
+  </g>
+  <line x1="520" y1="260" x2="520" y2="415" stroke="#34d399" stroke-width="3"/>
+  <line x1="530" y1="260" x2="530" y2="675" stroke="#34d399" stroke-width="3" stroke-dasharray="6"/>
+  <g transform="translate(50, 890)"><rect x="0" y="0" width="1100" height="45" rx="6" fill="#1e293b" stroke="#334155"/>
+    <text x="20" y="27" fill="#94a3b8" font-size="11">Horizontal: 1000BASE-T Cat6 UTP (&lt;90m) | Vertical Backbone: OM3 Multi-Mode Fiber / Cat6A Riser | TIA/EIA-568B</text>
+  </g>
+</svg>

@@ -1,0 +1,41 @@
+! ========================================================
+! DEVICE: R1-Edge-2911 (Cisco 2911 ISR)
+! LOCATION: MDF Server Room (2nd Floor)
+! ROLE: Perimeter Edge Router / Internet Gateway
+! ========================================================
+enable
+configure terminal
+hostname R1-Edge-2911
+no ip domain-lookup
+ip domain-name nexatech.com
+banner motd ^C
+**************************************************************
+* WARNING: Authorized Access Only - NexaTech Solutions Ltd. *
+* All network activities are logged and monitored.          *
+**************************************************************
+^C
+
+! Management / Security Baseline
+line con 0
+ exec-timeout 15 0
+ logging synchronous
+ exit
+line vty 0 4
+ exec-timeout 15 0
+ logging synchronous
+ transport input ssh
+ exit
+
+! Interface Connections
+interface GigabitEthernet0/0
+ description WAN Uplink to ISP Cloud
+ no shutdown
+ exit
+
+interface GigabitEthernet0/1
+ description Perimeter Link to ASA Firewall Gi1/1
+ no shutdown
+ exit
+
+end
+write memory
